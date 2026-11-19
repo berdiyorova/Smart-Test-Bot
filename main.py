@@ -2,5 +2,51 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher, F, types
+from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeChat
+from aiogram.filters import Command
 
 from config import BOT_TOKEN, ADMIN_ID
+
+
+
+bot = Bot(BOT_TOKEN)
+dp = Dispatcher()
+
+
+async def set_bot_commands(bot: Bot):
+    admin_commands = [
+        BotCommand(command="newtest", description="Yangi test yaratish"),
+        BotCommand(command="results", description="Natijalarni ko'rish")
+    ]
+    # await bot.set_my_commands(
+    #     commands=admin_commands,
+    #     scope=BotCommandScopeChat(chat_id=ADMIN_ID)
+    #     )
+
+    user_commands = [
+        BotCommand(command="start", description="Botni qayta ishga tushirish"),
+        BotCommand(command="my_results", description="Natijalarimni ko'rish"),
+        BotCommand(command="help", description="Yordam va qoidalar")
+    ]
+    await bot.set_my_commands(
+        commands=user_commands,
+        scope=BotCommandScopeDefault()
+    )
+
+
+@dp.message(Command("start"))
+async def cmd_start(message: types.Message):
+    await message.answer(
+        "Assalomu alaykum! Test botiga xush kelibsiz.",
+    )
+
+
+async def main():
+    logging.basicConfig(filename="test_bot.log", level=logging.INFO)
+    await set_bot_commands(bot)
+    await dp.start_polling(bot)
+
+
+
+if __name__=="__main__":
+    asyncio.run(main())
