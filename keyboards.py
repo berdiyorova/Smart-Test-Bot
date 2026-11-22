@@ -1,11 +1,11 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
 
-start_test_markup = ReplyKeyboardMarkup(
-    resize_keyboard=True,
-    keyboard=[[KeyboardButton(text="🚀 Test yechishni boshlash")]],
-    input_field_placeholder="Testni boshlash uchun tugmani bosing..."
-    )
+# start_test_markup = ReplyKeyboardMarkup(
+#     resize_keyboard=True,
+#     keyboard=[[KeyboardButton(text="🚀 Test yechishni boshlash")]],
+#     input_field_placeholder="Testni boshlash uchun tugmani bosing..."
+#     )
 
 
 # new_test_markup = ReplyKeyboardMarkup(
