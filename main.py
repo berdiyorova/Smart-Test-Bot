@@ -2,21 +2,25 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher, F, types
-from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeChat
+from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeChat, ReplyKeyboardRemove
 from aiogram.filters import Command
 
 from config import BOT_TOKEN, ADMIN_ID
 from keyboards import start_test_markup
+from create_test import router
 
 
 
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher()
 
+dp.include_router(router=router)
+
 
 async def set_bot_commands(bot: Bot):
     admin_commands = [
         BotCommand(command="newtest", description="Yangi test yaratish"),
+        BotCommand(command="tests", description="Testlarimni ko'rish"),
         BotCommand(command="results", description="Natijalarni ko'rish")
     ]
     await bot.set_my_commands(
@@ -38,7 +42,7 @@ async def set_bot_commands(bot: Bot):
 async def cmd_start(message: types.Message):
     await message.answer(
         text="Assalomu alaykum. Botga xush kelibsiz!",
-        reply_markup=start_test_markup
+        reply_markup=start_test_markup if message.chat.id != ADMIN_ID else ReplyKeyboardRemove()
     )
 
 
